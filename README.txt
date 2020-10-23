@@ -1,4 +1,7 @@
-The following may work in linux (tested in Ubuntu 18.04.5 LTS).
+The following should work in linux (tested in Ubuntu 18.04.5 LTS).
+I have also got it to work easily on my MacBook Pro with the xcode installed.
+
+Make sure you have the R package Rcpp installed. 
 
 (i)
 As indicated in RMakefile do this at the linux command line
@@ -17,6 +20,5 @@ The idea is that you can just copy this file to any directory you want to work i
 and then use > source("load-monbart.R").
 
 Note:
-Instead of (i) and (ii) you can try:
-$ make -f robMakefile
-  but this assumes the paths on your machine are the same as Rob's current machine.
+I am using section 2.5 of the Rcpp FAQ (frequently asked questions).
+Dirk will scorn this, but is very easy.
