@@ -1,0 +1,35 @@
+CCOPTS=-fpic  -O3 -pipe  -g -DNDEBUG  -fopenmp
+INC=-I/usr/local/lib/R/include -I/usr/local/lib/R/library/Rcpp/include
+LIBS=/usr/local/lib/R/library/Rcpp/libs/Rcpp.so -L/usr/local/lib/R/lib -lR
+CC=g++
+
+
+all: monbart.so load-monbart.R
+
+ROBS= tree.o funs.o bd.o
+
+monbart.so: cmonbart.o  $(ROBS)
+	$(CC) -shared -o monbart.so cmonbart.o $(ROBS) $(LIBS)
+
+cmonbart.o: cmonbart.cpp info.h tree.h
+	$(CC) $(INC) $(CCOPTS) -c cmonbart.cpp -o cmonbart.o
+
+funs.o: funs.cpp funs.h info.h tree.h
+	$(CC) $(INC) $(CCOPTS) -c funs.cpp -o funs.o
+
+tree.o: tree.cpp tree.h info.h tree.h
+	$(CC) $(INC) $(CCOPTS) -c tree.cpp -o tree.o
+
+bd.o: bd.cpp bd.h info.h tree.h
+	$(CC) $(INC) $(CCOPTS) -c bd.cpp -o bd.o
+
+load-monbart.R:
+	rm -f load-monbart.R
+	echo "dyn.load(\"$(PWD)/monbart.so\")" > load-monbart.R
+	echo "source(\"$(PWD)/rpmonbart.R\")" >> load-monbart.R
+	echo "source(\"$(PWD)/monbart.R\")" >> load-monbart.R
+
+clean:
+	rm -f monbart.so
+	rm -f *.o
+	rm -f load-monbart.R
