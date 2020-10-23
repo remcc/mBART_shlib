@@ -21,4 +21,4 @@ and then use > source("load-monbart.R").
 
 Note:
 I am using section 2.5 of the Rcpp FAQ (frequently asked questions).
-Dirk will scorn this, but is very easy.
+Dirk will scorn this, but it is very easy.
