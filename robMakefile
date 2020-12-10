@@ -2,11 +2,12 @@ CCOPTS=-fpic  -O3 -pipe  -g -DNDEBUG  -fopenmp
 INC=-I/usr/local/lib/R/include -I/usr/local/lib/R/library/Rcpp/include
 LIBS=/usr/local/lib/R/library/Rcpp/libs/Rcpp.so -L/usr/local/lib/R/lib -lR
 CC=g++
+ROBS=tree.o funs.o bd.o
 
 
 all: monbart.so load-monbart.R
 
-ROBS= tree.o funs.o bd.o
+##ROBS= tree.o funs.o bd.o
 
 monbart.so: cmonbart.o  $(ROBS)
 	$(CC) -shared -o monbart.so cmonbart.o $(ROBS) $(LIBS)
