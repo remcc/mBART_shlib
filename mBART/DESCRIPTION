@@ -1,0 +1,17 @@
+Package: mBART
+Type: Package
+Title: Monotone Bayesian Additive Regression Trees 
+Version: 1.0
+Date: 2020-12-10
+Authors@R: c(person('Robert', 'McCulloch', role='aut'),
+  person('Rodney', 'Sparapani', role=c('aut', 'cre'), 
+  email='rsparapa@mcw.edu'))
+Author: Robert McCulloch [aut], Rodney Sparapani [aut, cre]
+Maintainer: Rodney Sparapani <rsparapa@mcw.edu>
+Description: For the discovery of a relationship between a continuous outcome and a set of predictors, the nonparametric nature of BART allows for richer possibilities than restrictive parametric approaches. However, subject matter considerations may obviate an assumption of monotonicity with some of the predictors. For such contexts, we propose mBART, a constrained version of BART that can incorporate monotonicity while avoiding the confines of a parametric form.
+License: GPL (>= 2)
+Depends: R (>= 3.6)
+Imports: Rcpp (>= 1.0.4), parallel, tools
+LinkingTo: Rcpp
+NeedsCompilation: yes
+Packaged: 

@@ -1,0 +1,4 @@
+useDynLib(mBART, .registration=TRUE)
+export("monbart")
+export("rpmonbart")
+importFrom(Rcpp, evalCpp)
