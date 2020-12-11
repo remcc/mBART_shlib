@@ -106,5 +106,7 @@ res$yhat.train = res$yhat.train+fmean
 res$yhat.test.mean = res$yhat.test.mean+fmean
 res$yhat.test = res$yhat.test+fmean
 res$nkeeptreedraws=nkeeptreedraws
+res$mu=fmean
+attr(res, 'class') <- 'wbart'
 return(res)
 }
