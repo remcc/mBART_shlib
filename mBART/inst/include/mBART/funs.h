@@ -16,11 +16,11 @@ using std::endl;
 #include <R.h>
 #include <Rmath.h>
 //};
+*/
 #ifndef PI
 #define PI 3.1415926535897931
 #endif
 #define LTPI 1.83787706640934536
-*/
 
 //--------------------------------------------------
 //normal density
