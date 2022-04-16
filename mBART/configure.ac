@@ -10,17 +10,17 @@ AC_INIT([BART],[2.8],[],[],[])
 
 dnl snippet from 1.24 Using C++11 Code
 dnl https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Using-C_002b_002b11-code
-CXX11=`"${R_HOME}/bin/R" CMD config CXX11`
+CXX11=`R CMD config CXX11`
 if test -z "$CXX11"; then
   AC_MSG_ERROR([No C++11 compiler is available])
 fi
-CXX11STD=`"${R_HOME}/bin/R" CMD config CXX11STD`
+CXX11STD=`R CMD config CXX11STD`
 CXX="${CXX11} ${CXX11STD}"
-CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXX11FLAGS`
+CXXFLAGS=`R CMD config CXX11FLAGS`
 AC_LANG(C++)
 
 dnl additional changes as needed 
-LDFLAGS=`${R_HOME}/bin/R CMD config LDFLAGS`
+LDFLAGS=`R CMD config LDFLAGS`
 dnl CPPFLAGS="${CPPFLAGS} -D_OPENMP"
 
 dnl the meat of R's m4/openmp.m4

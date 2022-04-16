@@ -1,8 +1,8 @@
 Package: mBART
 Type: Package
 Title: Monotone Bayesian Additive Regression Trees 
-Version: 1.0
-Date: 2020-12-10
+Version: 1.1
+Date: 2022-04-15
 Authors@R: c(person('Robert', 'McCulloch', role='aut'),
   person('Rodney', 'Sparapani', role=c('aut', 'cre'), 
   email='rsparapa@mcw.edu'))
