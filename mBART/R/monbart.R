@@ -12,7 +12,7 @@ mgsize=50,
 nkeeptrain=ndpost,nkeeptest=ndpost,
 nkeeptestmean=ndpost,
 nkeeptreedraws=ndpost,
-printevery=10
+printevery=50
 )
 {
 ##require(Rcpp)

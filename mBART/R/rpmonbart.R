@@ -12,7 +12,7 @@ mgsize=50L,
 nkeeptrain=ndpost,nkeeptest=ndpost,
 nkeeptestmean=ndpost,
 nkeeptreedraws=ndpost,
-printevery=10,
+printevery=50,
 seed=99L,
 mc.cores=2L
 )
@@ -92,9 +92,11 @@ mc.cores=2L
    np = nrow(x.test)
 
    if(nkeeptrain) yhat.train.ret=post.list[[1]]$yhat.train
-   burnL = vector("list",mc.cores)
-   burnL[[1]] = post.list[[1]]$sigma[1:nskip]
-   sigma=c(post.list[[1]]$sigma[1:mc.ndpost+nskip])
+   ##burnL = vector("list",mc.cores)
+   ##burnL[[1]] = post.list[[1]]$sigma[1:nskip]
+   burnL = cbind(post.list[[1]]$sigma)
+   ##sigma=c(post.list[[1]]$sigma[1:mc.ndpost+nskip])
+   sigma = post.list[[1]]$sigma[-(1:nskip)]
    if(np) yhat.test.ret=post.list[[1]]$yhat.test
    yhat.train.mean = post.list[[1]]$yhat.train.mean
    if(np) yhat.test.mean = post.list[[1]]$yhat.test.mean
@@ -102,8 +104,10 @@ mc.cores=2L
    for(i in 2:mc.cores) {
       if(nkeeptrain) yhat.train.ret = rbind(yhat.train.ret,post.list[[i]]$yhat.train)
       if(np) yhat.test.ret = rbind(yhat.test.ret,post.list[[i]]$yhat.test)
-      burnL[[i]]=post.list[[i]]$sigma[1:nskip]
-      sigma =c(sigma,post.list[[i]]$sigma[1:mc.ndpost+nskip])
+      ##burnL[[i]]=post.list[[i]]$sigma[1:nskip]
+      burnL=cbind(burnL, post.list[[i]]$sigma)
+      sigma =c(sigma, post.list[[i]]$sigma[-(1:nskip)])
+      ##sigma =c(sigma,post.list[[i]]$sigma[1:mc.ndpost+nskip])
       yhat.train.mean = yhat.train.mean + post.list[[i]]$yhat.train.mean
       if(np) yhat.test.mean = yhat.test.mean + post.list[[i]]$yhat.test.mean
    }
@@ -116,8 +120,8 @@ mc.cores=2L
       if(nkeeptest) ret$yhat.test = yhat.test.ret
       if(nkeeptestmean) ret$yhat.test.mean = yhat.test.mean/mc.cores
    }
-   ret$sigma=sigma
-   ret$burnlist = burnL
+   ret$sigma.=sigma
+   ret$sigma = burnL
 
    return(ret)
 }
