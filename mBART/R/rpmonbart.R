@@ -131,7 +131,7 @@ mc.cores=2L
    }
    ret$sigma.=sigma
    ret$sigma = burnL
-   res$probs <- probs
+   ret$probs <- probs
 
    return(ret)
 }
