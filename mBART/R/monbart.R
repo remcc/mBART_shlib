@@ -9,9 +9,11 @@ fmean = mean(y.train),
 ntree=200,
 ndpost=1000, nskip=100,
 mgsize=50,
-nkeeptrain=ndpost,nkeeptest=ndpost,
+nkeeptrain=ndpost,
+nkeeptest=ndpost,
 nkeeptestmean=ndpost,
 nkeeptreedraws=ndpost,
+probs = c(0.025, 0.975),
 printevery=50
 )
 {
@@ -101,12 +103,18 @@ res = .Call("cmonbart",
             nkeeptreedraws,
             printevery
 )
+probs <- sort(probs)
 res$yhat.train.mean = res$yhat.train.mean+fmean
 res$yhat.train = res$yhat.train+fmean
+res$yhat.train.lower <- apply(res$yhat.train, 2, quantile, probs[1])
+res$yhat.train.upper <- apply(res$yhat.train, 2, quantile, probs[2])
 res$yhat.test.mean = res$yhat.test.mean+fmean
 res$yhat.test = res$yhat.test+fmean
+res$yhat.test.lower <- apply(res$yhat.test, 2, quantile, probs[1])
+res$yhat.test.upper <- apply(res$yhat.test, 2, quantile, probs[2])
 res$nkeeptreedraws=nkeeptreedraws
 res$mu=fmean
+res$probs <- probs
 attr(res, 'class') <- 'wbart'
 return(res)
 }

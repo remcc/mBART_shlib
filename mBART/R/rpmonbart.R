@@ -9,9 +9,11 @@ fmean = mean(y.train),
 ntree=200L,
 ndpost=1000L, nskip=100L,
 mgsize=50L,
-nkeeptrain=ndpost,nkeeptest=ndpost,
+nkeeptrain=ndpost,
+nkeeptest=ndpost,
 nkeeptestmean=ndpost,
 nkeeptreedraws=ndpost,
+probs = c(0.025, 0.975),
 printevery=50,
 seed=99L,
 mc.cores=2L
@@ -87,6 +89,7 @@ mc.cores=2L
       )
    }
 
+   probs <- sort(probs)
    post.list <- mccollect()
    cat("length of post.list: ", length(post.list),"\n")
    np = nrow(x.test)
@@ -114,14 +117,22 @@ mc.cores=2L
    }
 
    ret = list()
-   if(nkeeptrain) ret$yhat.train = yhat.train.ret
-   ret$yhat.train.mean = yhat.train.mean/mc.cores
+   if(nkeeptrain) {
+       ret$yhat.train = yhat.train.ret
+       ret$yhat.train.mean = yhat.train.mean/mc.cores
+       ret$yhat.train.lower <- apply(ret$yhat.train, 2, quantile, probs[1])
+       ret$yhat.train.upper <- apply(ret$yhat.train, 2, quantile, probs[2])
+   }
    if(np) {
       if(nkeeptest) ret$yhat.test = yhat.test.ret
       if(nkeeptestmean) ret$yhat.test.mean = yhat.test.mean/mc.cores
+      ret$yhat.test.lower <- apply(ret$yhat.test, 2, quantile, probs[1])
+      ret$yhat.test.upper <- apply(ret$yhat.test, 2, quantile, probs[2])
    }
    ret$sigma.=sigma
    ret$sigma = burnL
+   res$probs <- probs
 
    return(ret)
 }
+
